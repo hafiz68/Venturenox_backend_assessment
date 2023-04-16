@@ -1,2 +1,2 @@
 #!/bin/bash
-npm run migrate && npm start
+npm start

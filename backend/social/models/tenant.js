@@ -4,36 +4,35 @@ const { Sequelize } = require('sequelize');
 const tenant = db.define("tenant", {
   id: {
     type: Sequelize.INTEGER,
-    autoIncrement: true,
     primaryKey: true
   },
   address: {
-    type: Sequelize.STRING(50),
-    allowNull: false,
+    type: Sequelize.STRING(5000),
+    allowNull: true,
   },
   city: {
-    type: Sequelize.STRING(50),
-    allowNull: false
+    type: Sequelize.STRING(255),
+    allowNull: true
   },
   state: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.STRING(255),
+    allowNull: true
   },
   country: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.STRING(255),
+    allowNull: true
   },
   zipCode: {
-    type: Sequelize.STRING(50),
-    allowNull: false
+    type: Sequelize.STRING(255),
+    allowNull: true
   },
   phone: {
-    type: Sequelize.STRING(50),
-    allowNull: false
+    type: Sequelize.STRING(255),
+    allowNull: true
   },
   webUrl: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+    type: Sequelize.STRING(255),
+    allowNull: true
   }
 });
 
