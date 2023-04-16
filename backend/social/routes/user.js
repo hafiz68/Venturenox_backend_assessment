@@ -1,17 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const { users } = require("./../models/index");
 
 // Create
 router.post("/users", async (req, res) => {
     try {
-        const user = await prisma.user.create({
+        const user = await users.create({
             data: req.body
         });
-        res.status(201).send({user});
+        res.status(201).send({ user });
     }
-    catch(error) {
+    catch (error) {
         res.status(500).send(error.message);
     }
 });
@@ -19,22 +18,22 @@ router.post("/users", async (req, res) => {
 // Read
 router.get("/users/:id", async (req, res) => {
     try {
-        const user = await prisma.user.findUnique({
-            where: {id: req.params.id}
+        const user = await users.findUnique({
+            where: { id: req.params.id }
         });
-        res.status(201).send({user});
+        res.status(201).send({ user });
     }
-    catch(error) {
+    catch (error) {
         res.status(500).send(error.message);
     }
 });
 
 router.get("/users", async (req, res) => {
     try {
-        const users = await prisma.user.findMany();
-        res.status(201).send({users});
+        const users = await users.findMany();
+        res.status(201).send({ users });
     }
-    catch(error) {
+    catch (error) {
         res.status(500).send(error.message);
     }
 });
@@ -42,26 +41,26 @@ router.get("/users", async (req, res) => {
 // Update
 router.patch("/users/:id", async (req, res) => {
     try {
-        const user = prisma.user.update({
-            where: {id: req.params.id},
+        const user = users.update({
+            where: { id: req.params.id },
             data: req.body
         });
-        res.status(201).send({user});
+        res.status(201).send({ user });
     }
-    catch(error) {
+    catch (error) {
         res.status(500).send(error.message);
     }
 });
 
 // Delete
-router.delete("/users/:id", async (req, res) =>{
+router.delete("/users/:id", async (req, res) => {
     try {
-        const deletedUser = prisma.user.delete({
-            where: {id: req.params}
+        const deletedUser = users.delete({
+            where: { id: req.params }
         });
-        res.status(201).send({deletedUser})
-    } 
-    catch(error) {
+        res.status(201).send({ deletedUser })
+    }
+    catch (error) {
         res.status(500).send(error.message);
     }
 });

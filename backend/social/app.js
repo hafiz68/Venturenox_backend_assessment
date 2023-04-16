@@ -5,10 +5,12 @@ const { initProducer } = require('./utilities/producer');
 // const { connectProducer, connectAdmin } = require('./utilities/producer');
 // const KeyMaster = require('./utilities/KeyMaster');
 // const databaseConfig = require('./database/DatabaseConfig');
+const sequelize = require('./config/db');
 const userRouter = require("./routes/user");
 const tenantRouter = require("./routes/tenant");
 
 const app = express();
+const { users, tenant } = require('./models');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,9 +26,13 @@ app.use('/', async (req, res) => {
 
 });
 
-app.listen(process.env.PORT || 4000, async () => {
-	
-	console.log('App started at port', process.env.PORT || 4000);
-	await initProducer();
+sequelize.sync().then((result) => {
+	app.listen(process.env.PORT || 4000, async () => {
 
+		console.log('App started at port', process.env.PORT || 4000);
+		await initProducer();
+
+	});
+}).catch(err => {
+	console.log(err)
 });

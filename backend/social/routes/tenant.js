@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
+const { tenant } = require("./../models/index");
 
 // Create
 router.post("/tenant", async (req, res) => {
     try {
-        const tenant = await prisma.tenant.create({
+        const tenant = await tenant.create({
             data: req.body
         });
         res.status(201).send({ tenant });
@@ -19,7 +18,7 @@ router.post("/tenant", async (req, res) => {
 // Read
 router.get("/tenant/:id", async (req, res) => {
     try {
-        const tenant = await prisma.tenant.findUnique({
+        const tenant = await tenant.findUnique({
             where: { id: req.params.id }
         });
         res.status(201).send({ tenant });
@@ -31,7 +30,7 @@ router.get("/tenant/:id", async (req, res) => {
 
 router.get("/tenant", async (req, res) => {
     try {
-        const tenants = await prisma.tenant.findMany();
+        const tenants = await tenant.findMany();
         res.status(201).send({ tenants });
     }
     catch (error) {
@@ -42,7 +41,7 @@ router.get("/tenant", async (req, res) => {
 // Update
 router.patch("/tenant/:id", async (req, res) => {
     try {
-        const tenant = prisma.tenant.update({
+        const tenant = tenant.update({
             where: { id: req.params.id },
             data: req.body
         });
@@ -56,7 +55,7 @@ router.patch("/tenant/:id", async (req, res) => {
 // Delete
 router.delete("/tenant/:id", async (req, res) => {
     try {
-        const deletedtenant = prisma.tenant.delete({
+        const deletedtenant = tenant.delete({
             where: { id: req.params }
         });
         res.status(201).send({ deletedtenant })
